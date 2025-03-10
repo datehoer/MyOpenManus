@@ -49,6 +49,12 @@ cd OpenManus
 pip install -r requirements.txt
 ```
 
+4. 安装运行需要的组件：
+
+```bash
+playwright install
+```
+
 ### 方式二：使用 uv（推荐）
 
 1. 安装 uv（一个快速的 Python 包管理器）：

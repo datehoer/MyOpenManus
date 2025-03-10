@@ -2,6 +2,7 @@ import asyncio
 from typing import List
 
 from googlesearch import search
+from app.config import config
 
 from app.tool.base import BaseTool
 
@@ -40,9 +41,10 @@ The tool returns a list of URLs that match the search query.
             List[str]: A list of URLs matching the search query.
         """
         # Run the search in a thread pool to prevent blocking
+        proxy = config.default.get("proxy")
         loop = asyncio.get_event_loop()
         links = await loop.run_in_executor(
-            None, lambda: list(search(query, num_results=num_results))
+            None, lambda: list(search(query, num_results=num_results, proxy=proxy))
         )
 
         return links

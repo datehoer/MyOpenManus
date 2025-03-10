@@ -27,6 +27,8 @@ class LLMSettings(BaseModel):
 
 class AppConfig(BaseModel):
     llm: Dict[str, LLMSettings]
+    exa_ai: Dict
+    default: Dict
 
 
 class Config:
@@ -89,7 +91,9 @@ class Config:
                     name: {**default_settings, **override_config}
                     for name, override_config in llm_overrides.items()
                 },
-            }
+            },
+            "exa_ai": raw_config.get("exa_ai", {}),
+            "default": raw_config.get("default", {}),
         }
 
         self._config = AppConfig(**config_dict)
@@ -97,6 +101,14 @@ class Config:
     @property
     def llm(self) -> Dict[str, LLMSettings]:
         return self._config.llm
+
+    @property
+    def exa_ai(self) -> Dict[str, LLMSettings]:
+        return self._config.exa_ai
+
+    @property
+    def default(self) -> Dict[str, LLMSettings]:
+        return self._config.default
 
 
 config = Config()
